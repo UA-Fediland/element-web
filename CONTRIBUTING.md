@@ -124,7 +124,7 @@ must include:
 
 1. Comprehensive unit tests written in Jest. These are located in `/test`.
 2. "happy path" end-to-end tests.
-   These are located in `/cypress/e2e` in `matrix-react-sdk`, and
+   These are located in `/playwright/e2e` in `matrix-react-sdk`, and
    are run using `element-web`. Ideally, you would also include tests for edge
    and error cases.
 
@@ -284,7 +284,7 @@ be required.
 
 # Review expectations
 
-See https://github.com/vector-im/element-meta/wiki/Review-process
+See https://github.com/element-hq/element-meta/wiki/Review-process
 
 # Merge Strategy
 
