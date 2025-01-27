@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2017-2021 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -90,8 +90,8 @@ interface IState {
 
 export default class InteractiveAuthComponent<T> extends React.Component<InteractiveAuthProps<T>, IState> {
     private readonly authLogic: InteractiveAuth<T>;
-    private readonly intervalId: number | null = null;
     private readonly stageComponent = createRef<IStageComponent>();
+    private intervalId: number | null = null;
 
     private unmounted = false;
 
@@ -126,15 +126,17 @@ export default class InteractiveAuthComponent<T> extends React.Component<Interac
                 AuthType.SsoUnstable,
             ],
         });
+    }
+
+    public componentDidMount(): void {
+        this.unmounted = false;
 
         if (this.props.poll) {
             this.intervalId = window.setInterval(() => {
                 this.authLogic.poll();
             }, 2000);
         }
-    }
 
-    public componentDidMount(): void {
         this.authLogic
             .attemptAuth()
             .then(async (result) => {

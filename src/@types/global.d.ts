@@ -2,7 +2,7 @@
 Copyright 2020-2024 New Vector Ltd.
 Copyright 2020, 2021 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -10,7 +10,6 @@ Please see LICENSE files in the repository root for full details.
 import "matrix-js-sdk/src/@types/global"; // load matrix-js-sdk's type extensions first
 import "@types/modernizr";
 
-import type { Renderer } from "react-dom";
 import type { logger } from "matrix-js-sdk/src/logger";
 import ContentMessages from "../ContentMessages";
 import { IMatrixClientPeg } from "../MatrixClientPeg";
@@ -44,6 +43,8 @@ import AutoRageshakeStore from "../stores/AutoRageshakeStore";
 import { IConfigOptions } from "../IConfigOptions";
 import { MatrixDispatcher } from "../dispatcher/dispatcher";
 import { DeepReadonly } from "./common";
+import MatrixChat from "../components/structures/MatrixChat";
+import { InitialCryptoSetupStore } from "../stores/InitialCryptoSetupStore";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -71,7 +72,7 @@ declare global {
     interface Window {
         mxSendRageshake: (text: string, withLogs?: boolean) => void;
         matrixLogger: typeof logger;
-        matrixChat: ReturnType<Renderer>;
+        matrixChat?: MatrixChat;
         mxSendSentryReport: (userText: string, issueUrl: string, error: Error) => Promise<void>;
         mxLoginWithAccessToken: (hsUrl: string, accessToken: string) => Promise<void>;
         mxAutoRageshakeStore?: AutoRageshakeStore;
@@ -117,6 +118,7 @@ declare global {
         mxPerformanceEntryNames: any;
         mxUIStore: UIStore;
         mxSetupEncryptionStore?: SetupEncryptionStore;
+        mxInitialCryptoStore?: InitialCryptoSetupStore;
         mxRoomScrollStateStore?: RoomScrollStateStore;
         mxActiveWidgetStore?: ActiveWidgetStore;
         mxOnRecaptchaLoaded?: () => void;

@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2020 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -134,12 +134,6 @@ export enum Action {
      * Opens the modal dial pad
      */
     OpenDialPad = "open_dial_pad",
-
-    /**
-     * Dial the phone number in the payload
-     * payload: DialNumberPayload
-     */
-    DialNumber = "dial_number",
 
     /**
      * Fired when CallHandler has checked for PSTN protocol support

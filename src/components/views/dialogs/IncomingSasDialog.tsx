@@ -1,7 +1,7 @@
 /*
 Copyright 2019-2024 New Vector Ltd.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -63,6 +63,9 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
             opponentProfileError: null,
             sas: null,
         };
+    }
+
+    public componentDidMount(): void {
         this.props.verifier.on(VerifierEvent.ShowSas, this.onVerifierShowSas);
         this.props.verifier.on(VerifierEvent.Cancel, this.onVerifierCancel);
         this.fetchOpponentProfile();

@@ -2,7 +2,7 @@
 Copyright 2019-2024 New Vector Ltd.
 Copyright 2019 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -10,11 +10,12 @@ import { KeyboardEvent } from "react";
 
 import { Part, CommandPartCreator, PartCreator } from "./parts";
 import DocumentPosition from "./position";
-import { ICompletion } from "../autocomplete/Autocompleter";
+import { ICompletion, ISelectionRange } from "../autocomplete/Autocompleter";
 import Autocomplete from "../components/views/rooms/Autocomplete";
 
 export interface ICallback {
     replaceParts?: Part[];
+    range?: ISelectionRange;
     close?: boolean;
 }
 
@@ -82,6 +83,7 @@ export default class AutocompleteWrapperModel {
         this.updateCallback({
             replaceParts: this.partForCompletion(completion),
             close: true,
+            range: completion.range,
         });
     }
 

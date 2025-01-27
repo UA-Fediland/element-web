@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2015-2022 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -16,6 +16,7 @@ import {
     IUsageLimit,
     SyncStateData,
     SyncState,
+    EventType,
 } from "matrix-js-sdk/src/matrix";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import classNames from "classnames";
@@ -23,7 +24,6 @@ import classNames from "classnames";
 import { isOnlyCtrlOrCmdKeyEvent, Key } from "../../Keyboard";
 import PageTypes from "../../PageTypes";
 import MediaDeviceHandler from "../../MediaDeviceHandler";
-import { fixupColorFonts } from "../../utils/FontManager";
 import dis from "../../dispatcher/dispatcher";
 import { IMatrixClientCreds } from "../../MatrixClientPeg";
 import SettingsStore from "../../settings/SettingsStore";
@@ -49,11 +49,10 @@ import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../LegacyCallHandl
 import AudioFeedArrayForLegacyCall from "../views/voip/AudioFeedArrayForLegacyCall";
 import { OwnProfileStore } from "../../stores/OwnProfileStore";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
-import RoomView from "./RoomView";
-import type { RoomView as RoomViewType } from "./RoomView";
+import { RoomView } from "./RoomView";
 import ToastContainer from "./ToastContainer";
 import UserView from "./UserView";
-import BackdropPanel from "./BackdropPanel";
+import { BackdropPanel } from "./BackdropPanel";
 import { mediaFromMxc } from "../../customisations/Media";
 import { UserTab } from "../views/dialogs/UserTab";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
@@ -125,7 +124,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     public static displayName = "LoggedInView";
 
     protected readonly _matrixClient: MatrixClient;
-    protected readonly _roomView: React.RefObject<RoomViewType>;
+    protected readonly _roomView: React.RefObject<RoomView>;
     protected readonly _resizeContainer: React.RefObject<HTMLDivElement>;
     protected readonly resizeHandler: React.RefObject<HTMLDivElement>;
     protected layoutWatcherRef?: string;
@@ -150,8 +149,6 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         MediaDeviceHandler.loadDevices();
 
-        fixupColorFonts();
-
         this._roomView = React.createRef();
         this._resizeContainer = React.createRef();
         this.resizeHandler = React.createRef();
@@ -165,7 +162,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         this._matrixClient.on(ClientEvent.AccountData, this.onAccountData);
         // check push rules on start up as well
-        monitorSyncedPushRules(this._matrixClient.getAccountData("m.push_rules"), this._matrixClient);
+        monitorSyncedPushRules(this._matrixClient.getAccountData(EventType.PushRules), this._matrixClient);
         this._matrixClient.on(ClientEvent.Sync, this.onSync);
         // Call `onSync` with the current state as well
         this.onSync(this._matrixClient.getSyncState(), null, this._matrixClient.getSyncStateData() ?? undefined);
@@ -228,9 +225,9 @@ class LoggedInView extends React.Component<IProps, IState> {
         this._matrixClient.removeListener(ClientEvent.Sync, this.onSync);
         this._matrixClient.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         OwnProfileStore.instance.off(UPDATE_EVENT, this.refreshBackgroundImage);
-        if (this.layoutWatcherRef) SettingsStore.unwatchSetting(this.layoutWatcherRef);
-        if (this.compactLayoutWatcherRef) SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
-        if (this.backgroundImageWatcherRef) SettingsStore.unwatchSetting(this.backgroundImageWatcherRef);
+        SettingsStore.unwatchSetting(this.layoutWatcherRef);
+        SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
+        SettingsStore.unwatchSetting(this.backgroundImageWatcherRef);
         this.timezoneProfileUpdateRef?.forEach((s) => SettingsStore.unwatchSetting(s));
         this.resizer?.detach();
     }
@@ -249,7 +246,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         } else {
             backgroundImage = OwnProfileStore.instance.getHttpAvatarUrl();
         }
-        this.setState({ backgroundImage });
+        this.setState({ backgroundImage: backgroundImage ?? undefined });
     };
 
     public canResetTimelineInRoom = (roomId: string): boolean => {

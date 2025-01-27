@@ -2,7 +2,7 @@
 Copyright 2018-2024 New Vector Ltd.
 Copyright 2017 Vector Creations Ltd
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -68,11 +68,13 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         };
 
         this.resizer = this.createResizer();
-
-        this.props.resizeNotifier.on("isResizing", this.onIsResizing);
     }
 
     public componentDidMount(): void {
+        this.unmounted = false;
+
+        this.props.resizeNotifier.on("isResizing", this.onIsResizing);
+
         ScalarMessaging.startListening();
         WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(this.props.room), this.updateApps);
         this.dispatcherRef = dis.register(this.onAction);
@@ -82,7 +84,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         this.unmounted = true;
         ScalarMessaging.stopListening();
         WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(this.props.room), this.updateApps);
-        if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
+        dis.unregister(this.dispatcherRef);
         if (this.resizeContainer) {
             this.resizer.detach();
         }

@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2016-2021 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -801,7 +801,6 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
         this.ssoUrl = props.matrixClient.getFallbackAuthUrl(this.props.loginType, this.props.authSessionId);
 
         this.popupWindow = null;
-        window.addEventListener("message", this.onReceiveMessage);
 
         this.state = {
             phase: SSOAuthEntry.PHASE_PREAUTH,
@@ -810,6 +809,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
     }
 
     public componentDidMount(): void {
+        window.addEventListener("message", this.onReceiveMessage);
         this.props.onPhaseChange(SSOAuthEntry.PHASE_PREAUTH);
     }
 
@@ -910,7 +910,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
 
 export class FallbackAuthEntry<T = {}> extends React.Component<IAuthEntryProps & T> {
     protected popupWindow: Window | null;
-    protected fallbackButton = createRef<HTMLButtonElement>();
+    protected fallbackButton = createRef<HTMLDivElement>();
 
     public constructor(props: IAuthEntryProps & T) {
         super(props);
@@ -918,10 +918,10 @@ export class FallbackAuthEntry<T = {}> extends React.Component<IAuthEntryProps &
         // we have to make the user click a button, as browsers will block
         // the popup if we open it immediately.
         this.popupWindow = null;
-        window.addEventListener("message", this.onReceiveMessage);
     }
 
     public componentDidMount(): void {
+        window.addEventListener("message", this.onReceiveMessage);
         this.props.onPhaseChange(DEFAULT_PHASE);
     }
 

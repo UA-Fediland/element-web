@@ -1,7 +1,7 @@
 /*
 Copyright 2018-2024 New Vector Ltd.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -141,9 +141,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         if (client) client.removeListener(ClientEvent.AccountData, this.updateWidget);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         window.removeEventListener("resize", this.onResize);
-        if (this.dispatcherRef) {
-            dis.unregister(this.dispatcherRef);
-        }
+        dis.unregister(this.dispatcherRef);
     }
 
     public componentDidUpdate(): void {

@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2022 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -84,7 +84,7 @@ export const makeThreadEvents = ({
     rootEvent.setUnsigned({
         "m.relations": {
             [RelationType.Thread]: {
-                latest_event: events[events.length - 1],
+                latest_event: events[events.length - 1].event,
                 count: length,
                 current_user_participated: [...participantUserIds, authorId].includes(currentUserId!),
             },
@@ -157,6 +157,6 @@ export const populateThread = async ({
     // that it is already loaded, and send the events again to the room
     // so they are added to the thread timeline.
     ret.thread.initialEventsFetched = true;
-    await room.addLiveEvents(ret.events);
+    await room.addLiveEvents(ret.events, { addToState: false });
     return ret;
 };

@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2022 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -15,7 +15,6 @@ import VoiceRecordComposerTile from "../../../../../src/components/views/rooms/V
 import { doMaybeLocalRoomAction } from "../../../../../src/utils/local-room";
 import { MatrixClientPeg } from "../../../../../src/MatrixClientPeg";
 import { IUpload, VoiceMessageRecording } from "../../../../../src/audio/VoiceMessageRecording";
-import { RoomPermalinkCreator } from "../../../../../src/utils/permalinks/Permalinks";
 import { VoiceRecordingStore } from "../../../../../src/stores/VoiceRecordingStore";
 import { PlaybackClock } from "../../../../../src/audio/PlaybackClock";
 import { mkEvent } from "../../../../test-utils";
@@ -57,7 +56,6 @@ describe("<VoiceRecordComposerTile/>", () => {
         const props = {
             room,
             ref: voiceRecordComposerTile,
-            permalinkCreator: new RoomPermalinkCreator(room),
         };
         mockUpload = {
             mxc: "mxc://example.com/voice",
@@ -142,7 +140,6 @@ describe("<VoiceRecordComposerTile/>", () => {
             const props = {
                 room,
                 ref: voiceRecordComposerTile,
-                permalinkCreator: new RoomPermalinkCreator(room),
                 replyToEvent,
             };
             render(<VoiceRecordComposerTile {...props} />);

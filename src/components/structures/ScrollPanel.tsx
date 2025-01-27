@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2015-2022 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -191,12 +191,12 @@ export default class ScrollPanel extends React.Component<IProps> {
     public constructor(props: IProps) {
         super(props);
 
-        this.props.resizeNotifier?.on("middlePanelResizedNoisy", this.onResize);
-
         this.resetScrollState();
     }
 
     public componentDidMount(): void {
+        this.unmounted = false;
+        this.props.resizeNotifier?.on("middlePanelResizedNoisy", this.onResize);
         this.checkScroll();
     }
 

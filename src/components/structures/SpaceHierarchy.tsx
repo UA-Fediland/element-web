@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2021-2023 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -114,7 +114,7 @@ const Tile: React.FC<ITileProps> = ({
         (room.room_type === RoomType.Space ? _t("common|unnamed_space") : _t("common|unnamed_room"));
 
     const [showChildren, toggleShowChildren] = useStateToggle(true);
-    const [onFocus, isActive, ref] = useRovingTabIndex();
+    const [onFocus, isActive, ref, nodeRef] = useRovingTabIndex();
     const [busy, setBusy] = useState(false);
 
     const onPreviewClick = (ev: ButtonEvent): void => {
@@ -288,7 +288,7 @@ const Tile: React.FC<ITileProps> = ({
                     case KeyBindingAction.ArrowLeft:
                         e.preventDefault();
                         e.stopPropagation();
-                        ref.current?.focus();
+                        nodeRef.current?.focus();
                         break;
                 }
             };
@@ -315,7 +315,7 @@ const Tile: React.FC<ITileProps> = ({
                 case KeyBindingAction.ArrowRight:
                     handled = true;
                     if (showChildren) {
-                        const childSection = ref.current?.nextElementSibling;
+                        const childSection = nodeRef.current?.nextElementSibling;
                         childSection?.querySelector<HTMLDivElement>(".mx_SpaceHierarchy_roomTile")?.focus();
                     } else {
                         toggleShowChildren();
@@ -790,7 +790,7 @@ const SpaceHierarchy: React.FC<IProps> = ({ space, initialText = "", showRoom, a
     const onKeyDown = (ev: KeyboardEvent, state: IState): void => {
         const action = getKeyBindingsManager().getAccessibilityAction(ev);
         if (action === KeyBindingAction.ArrowDown && ev.currentTarget.classList.contains("mx_SpaceHierarchy_search")) {
-            state.refs[0]?.current?.focus();
+            state.nodes[0]?.focus();
         }
     };
 

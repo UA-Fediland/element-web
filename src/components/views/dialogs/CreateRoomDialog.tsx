@@ -3,7 +3,7 @@ Copyright 2024 New Vector Ltd.
 Copyright 2020, 2021 The Matrix.org Foundation C.I.C.
 Copyright 2017 Michael Telatynski <7t3chguy@gmail.com>
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -113,14 +113,6 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             nameIsValid: false,
             canChangeEncryption: false,
         };
-
-        checkUserIsAllowedToChangeEncryption(cli, Preset.PrivateChat).then(({ allowChange, forcedValue }) =>
-            this.setState((state) => ({
-                canChangeEncryption: allowChange,
-                // override with forcedValue if it is set
-                isEncrypted: forcedValue ?? state.isEncrypted,
-            })),
-        );
     }
 
     private roomCreateOptions(): IOpts {
@@ -160,6 +152,15 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
+        const cli = MatrixClientPeg.safeGet();
+        checkUserIsAllowedToChangeEncryption(cli, Preset.PrivateChat).then(({ allowChange, forcedValue }) =>
+            this.setState((state) => ({
+                canChangeEncryption: allowChange,
+                // override with forcedValue if it is set
+                isEncrypted: forcedValue ?? state.isEncrypted,
+            })),
+        );
+
         // move focus to first field when showing dialog
         this.nameField.current?.focus();
     }
@@ -255,7 +256,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     });
 
     public render(): React.ReactNode {
-        const isVideoRoom = this.props.type === RoomType.ElementVideo;
+        const isVideoRoom = this.props.type === RoomType.ElementVideo || this.props.type === RoomType.UnstableCall;
 
         let aliasField: JSX.Element | undefined;
         if (this.state.joinRule === JoinRule.Public) {

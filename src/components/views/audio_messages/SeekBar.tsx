@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2021 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -55,7 +55,9 @@ export default class SeekBar extends React.PureComponent<IProps, IState> {
         this.state = {
             percentage: percentageOf(this.props.playback.timeSeconds, 0, this.props.playback.durationSeconds),
         };
+    }
 
+    public componentDidMount(): void {
         // We don't need to de-register: the class handles this for us internally
         this.props.playback.liveData.onUpdate(() => this.animationFrameFn.mark());
     }

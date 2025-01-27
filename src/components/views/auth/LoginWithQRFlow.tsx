@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2022-2024 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -40,10 +40,6 @@ interface Props {
  */
 export default class LoginWithQRFlow extends React.Component<Props> {
     private checkCodeInput = createRef<HTMLInputElement>();
-
-    public constructor(props: Props) {
-        super(props);
-    }
 
     private handleClick = (type: Click): ((e: React.FormEvent) => Promise<void>) => {
         return async (e: React.FormEvent): Promise<void> => {

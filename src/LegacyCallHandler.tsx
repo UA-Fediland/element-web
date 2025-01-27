@@ -5,7 +5,7 @@ Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
 Copyright 2017, 2018 New Vector Ltd
 Copyright 2015, 2016 OpenMarket Ltd
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -55,8 +55,6 @@ import { OpenInviteDialogPayload } from "./dispatcher/payloads/OpenInviteDialogP
 import { findDMForUser } from "./utils/dm/findDMForUser";
 import { getJoinedNonFunctionalMembers } from "./utils/room/getJoinedNonFunctionalMembers";
 import { localNotificationsAreSilenced } from "./utils/notifications";
-import { SdkContextClass } from "./contexts/SDKContext";
-import { showCantStartACallDialog } from "./voice-broadcast/utils/showCantStartACallDialog";
 import { isNotNull } from "./Typeguards";
 import { BackgroundAudio } from "./audio/BackgroundAudio";
 import { Jitsi } from "./widgets/Jitsi.ts";
@@ -856,15 +854,6 @@ export default class LegacyCallHandler extends EventEmitter {
         const room = cli.getRoom(roomId);
         if (!room) {
             logger.error(`Room ${roomId} does not exist.`);
-            return;
-        }
-
-        // Pause current broadcast, if any
-        SdkContextClass.instance.voiceBroadcastPlaybacksStore.getCurrent()?.pause();
-
-        if (SdkContextClass.instance.voiceBroadcastRecordingsStore.getCurrent()) {
-            // Do not start a call, if recording a broadcast
-            showCantStartACallDialog();
             return;
         }
 

@@ -3,7 +3,7 @@ Copyright 2024 New Vector Ltd.
 Copyright 2024 The Matrix.org Foundation C.I.C.
 Copyright 2023 Suguru Hirahara
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -23,7 +23,7 @@ test.describe("Preferences user settings tab", () => {
         },
     });
 
-    test("should be rendered properly", async ({ app, page, user }) => {
+    test("should be rendered properly", { tag: "@screenshot" }, async ({ app, page, user }) => {
         page.setViewportSize({ width: 1024, height: 3300 });
         const tab = await app.settings.openUserSettings("Preferences");
         // Assert that the top heading is rendered
@@ -31,7 +31,7 @@ test.describe("Preferences user settings tab", () => {
         await expect(tab).toMatchScreenshot("Preferences-user-settings-tab-should-be-rendered-properly-1.png");
     });
 
-    test("should be able to change the app language", async ({ uut, user }) => {
+    test("should be able to change the app language", { tag: ["@no-firefox", "@no-webkit"] }, async ({ uut, user }) => {
         // Check language and region setting dropdown
         const languageInput = uut.getByRole("button", { name: "Language Dropdown" });
         await languageInput.scrollIntoViewIfNeeded();

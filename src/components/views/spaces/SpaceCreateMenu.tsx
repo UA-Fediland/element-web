@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2021 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -43,6 +43,7 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { Filter } from "../dialogs/spotlight/Filter";
+import { OpenSpotlightPayload } from "../../../dispatcher/payloads/OpenSpotlightPayload.ts";
 
 export const createSpace = async (
     client: MatrixClient,
@@ -265,7 +266,7 @@ const SpaceCreateMenu: React.FC<{
     };
 
     const onSearchClick = (): void => {
-        defaultDispatcher.dispatch({
+        defaultDispatcher.dispatch<OpenSpotlightPayload>({
             action: Action.OpenSpotlight,
             initialFilter: Filter.PublicSpaces,
         });

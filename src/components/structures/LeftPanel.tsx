@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2020 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -67,10 +67,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             activeSpace: SpaceStore.instance.activeSpace,
             showBreadcrumbs: LeftPanel.breadcrumbsMode,
         };
-
-        BreadcrumbsStore.instance.on(UPDATE_EVENT, this.onBreadcrumbsUpdate);
-        RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onBreadcrumbsUpdate);
-        SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.updateActiveSpace);
     }
 
     private static get breadcrumbsMode(): BreadcrumbsMode {
@@ -78,6 +74,10 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
+        BreadcrumbsStore.instance.on(UPDATE_EVENT, this.onBreadcrumbsUpdate);
+        RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onBreadcrumbsUpdate);
+        SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.updateActiveSpace);
+
         if (this.listContainerRef.current) {
             UIStore.instance.trackElementDimensions("ListContainer", this.listContainerRef.current);
             // Using the passive option to not block the main thread

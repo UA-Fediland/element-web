@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2022 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -643,8 +643,8 @@ export class ElementCall extends Call {
     public static readonly MEMBER_EVENT_TYPE = new NamespacedValue(null, EventType.GroupCallMemberPrefix);
     public readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
-    private settingsStoreCallEncryptionWatcher: string | null = null;
-    private terminationTimer: number | null = null;
+    private settingsStoreCallEncryptionWatcher?: string;
+    private terminationTimer?: number;
     private _layout = Layout.Tile;
     public get layout(): Layout {
         return this._layout;
@@ -688,7 +688,7 @@ export class ElementCall extends Call {
 
         // Set custom fonts
         if (SettingsStore.getValue("useSystemFont")) {
-            SettingsStore.getValue<string>("systemFont")
+            SettingsStore.getValue("systemFont")
                 .split(",")
                 .map((font) => {
                     // Strip whitespace and quotes
@@ -938,13 +938,9 @@ export class ElementCall extends Call {
         this.session.off(MatrixRTCSessionEvent.MembershipsChanged, this.onMembershipChanged);
         this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
 
-        if (this.settingsStoreCallEncryptionWatcher) {
-            SettingsStore.unwatchSetting(this.settingsStoreCallEncryptionWatcher);
-        }
-        if (this.terminationTimer !== null) {
-            clearTimeout(this.terminationTimer);
-            this.terminationTimer = null;
-        }
+        SettingsStore.unwatchSetting(this.settingsStoreCallEncryptionWatcher);
+        clearTimeout(this.terminationTimer);
+        this.terminationTimer = undefined;
 
         super.destroy();
     }

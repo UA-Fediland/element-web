@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2021 Robin Townsend <robin@robin.town>
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -253,8 +253,8 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     const [query, setQuery] = useState("");
     const lcQuery = query.toLowerCase();
 
-    const previewLayout = useSettingValue<Layout>("layout");
-    const msc3946DynamicRoomPredecessors = useSettingValue<boolean>("feature_dynamic_room_predecessors");
+    const previewLayout = useSettingValue("layout");
+    const msc3946DynamicRoomPredecessors = useSettingValue("feature_dynamic_room_predecessors");
 
     let rooms = useMemo(
         () =>
@@ -294,7 +294,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
         const action = getKeyBindingsManager().getAccessibilityAction(ev);
         switch (action) {
             case KeyBindingAction.Enter: {
-                state.activeRef?.current?.querySelector<HTMLButtonElement>(".mx_ForwardList_sendButton")?.click();
+                state.activeNode?.querySelector<HTMLButtonElement>(".mx_ForwardList_sendButton")?.click();
                 break;
             }
 
@@ -347,13 +347,13 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                                     onSearch={(query: string): void => {
                                         setQuery(query);
                                         setTimeout(() => {
-                                            const ref = context.state.refs[0];
-                                            if (ref) {
+                                            const node = context.state.nodes[0];
+                                            if (node) {
                                                 context.dispatch({
                                                     type: Type.SetFocus,
-                                                    payload: { ref },
+                                                    payload: { node },
                                                 });
-                                                ref.current?.scrollIntoView?.({
+                                                node?.scrollIntoView?.({
                                                     block: "nearest",
                                                 });
                                             }
@@ -361,7 +361,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                                     }}
                                     autoFocus={true}
                                     onKeyDown={onKeyDownHandler}
-                                    aria-activedescendant={context.state.activeRef?.current?.id}
+                                    aria-activedescendant={context.state.activeNode?.id}
                                     aria-owns="mx_ForwardDialog_resultsList"
                                 />
                             )}

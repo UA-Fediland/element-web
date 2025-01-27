@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2024 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -13,6 +13,8 @@ import { test as base, expect } from "../../../element-web-test";
 import { Bot } from "../../../pages/bot";
 import { Client } from "../../../pages/client";
 import { ElementAppPage } from "../../../pages/ElementAppPage";
+
+type RoomRef = { name: string; roomId: string };
 
 /**
  * Set up for a read receipt test:
@@ -181,9 +183,10 @@ export class Helpers {
      * Use the supplied client to send messages or perform actions as specified by
      * the supplied {@link Message} items.
      */
-    async sendMessageAsClient(cli: Client, roomName: string | { name: string }, messages: Message[]) {
-        const room = await this.findRoomByName(typeof roomName === "string" ? roomName : roomName.name);
-        const roomId = await room.evaluate((room) => room.roomId);
+    async sendMessageAsClient(cli: Client, roomRef: RoomRef, messages: Message[]) {
+        const roomId = roomRef.roomId;
+        const room = await this.findRoomById(roomId);
+        expect(room).toBeTruthy();
 
         for (const message of messages) {
             if (typeof message === "string") {
@@ -205,7 +208,7 @@ export class Helpers {
     /**
      * Open the room with the supplied name.
      */
-    async goTo(room: string | { name: string }) {
+    async goTo(room: RoomRef) {
         await this.app.viewRoomByName(typeof room === "string" ? room : room.name);
     }
 
@@ -220,10 +223,10 @@ export class Helpers {
         await expect(this.page.locator(".mx_ThreadView_timelinePanelWrapper")).toBeVisible();
     }
 
-    async findRoomByName(roomName: string): Promise<JSHandle<Room>> {
-        return this.app.client.evaluateHandle((cli, roomName) => {
-            return cli.getRooms().find((r) => r.name === roomName);
-        }, roomName);
+    async findRoomById(roomId: string): Promise<JSHandle<Room | undefined>> {
+        return this.app.client.evaluateHandle((cli, roomId) => {
+            return cli.getRooms().find((r) => r.roomId === roomId);
+        }, roomId);
     }
 
     /**
@@ -231,7 +234,7 @@ export class Helpers {
      * @param room - the name of the room to send messages into
      * @param messages - the list of messages to send, these can be strings or implementations of MessageSpec like `editOf`
      */
-    async receiveMessages(room: string | { name: string }, messages: Message[]) {
+    async receiveMessages(room: RoomRef, messages: Message[]) {
         await this.sendMessageAsClient(this.bot, room, messages);
     }
 
@@ -276,7 +279,7 @@ export class Helpers {
      * Assert that the threads activity centre button has no indicator
      */
     async assertNoTacIndicator() {
-        // Assert by checkng neither of the known indicators are visible first. This will wait
+        // Assert by checking neither of the known indicators are visible first. This will wait
         // if it takes a little time to disappear, but the screenshot comparison won't.
         await expect(this.getTacButton().locator("[data-indicator='success']")).not.toBeVisible();
         await expect(this.getTacButton().locator("[data-indicator='critical']")).not.toBeVisible();
@@ -376,7 +379,7 @@ export class Helpers {
      * Clicks the button to mark all threads as read in the current room
      */
     clickMarkAllThreadsRead() {
-        return this.page.getByLabel("Mark all as read").click();
+        return this.page.locator("#thread-panel").getByRole("button", { name: "Mark all as read" }).click();
     }
 }
 

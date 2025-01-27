@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2020, 2021 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -22,6 +22,7 @@ import {
     WidgetApiFromWidgetAction,
     WidgetKind,
 } from "matrix-widget-api";
+import { ErrorIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import BaseDialog from "./BaseDialog";
 import { _t, getUserLanguage } from "../../../languageHandler";
@@ -33,7 +34,6 @@ import { arrayFastClone } from "../../../utils/arrays";
 import { ElementWidget } from "../../../stores/widgets/StopGapWidget";
 import { ELEMENT_CLIENT_ID } from "../../../identifiers";
 import SettingsStore from "../../../settings/SettingsStore";
-import WarningBadgeSvg from "../../../../res/img/element-icons/warning-badge.svg";
 
 interface IProps {
     widgetDefinition: IModalWidgetOpenRequestData;
@@ -186,7 +186,7 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
                 onFinished={this.props.onFinished}
             >
                 <div className="mx_ModalWidgetDialog_warning">
-                    <img src={WarningBadgeSvg} height="16" width="16" alt="" />
+                    <ErrorIcon width="16px" height="16px" />
                     {_t("widget|modal_data_warning", {
                         widgetDomain: parsed.hostname,
                     })}

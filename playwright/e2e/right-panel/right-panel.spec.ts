@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2022 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -38,7 +38,7 @@ test.describe("RightPanel", () => {
     });
 
     test.describe("in rooms", () => {
-        test("should handle long room address and long room name", async ({ page, app }) => {
+        test("should handle long room address and long room name", { tag: "@screenshot" }, async ({ page, app }) => {
             await app.client.createRoom({ name: ROOM_NAME_LONG });
             await viewRoomSummaryByName(page, app, ROOM_NAME_LONG);
 

@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2021-2023 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -14,7 +14,7 @@ import { Layout } from "../../../settings/enums/Layout";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { _t } from "../../../languageHandler";
-import SettingsSubsection from "./shared/SettingsSubsection";
+import { SettingsSubsection } from "./shared/SettingsSubsection";
 import Field from "../elements/Field";
 import { FontWatcher } from "../../../settings/watchers/FontWatcher";
 
@@ -47,7 +47,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            fontSizeDelta: SettingsStore.getValue<number>("fontSizeDelta", null),
+            fontSizeDelta: SettingsStore.getValue("fontSizeDelta", null),
             browserFontSize: FontWatcher.getBrowserDefaultFontSize(),
             useCustomFontSize: SettingsStore.getValue("useCustomFontSize"),
             layout: SettingsStore.getValue("layout"),
@@ -55,6 +55,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
     }
 
     public async componentDidMount(): Promise<void> {
+        this.unmounted = false;
         // Fetch the current user profile for the message preview
         const client = MatrixClientPeg.safeGet();
         const userId = client.getSafeUserId();
@@ -79,9 +80,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
 
     public componentWillUnmount(): void {
         this.unmounted = true;
-        if (this.layoutWatcherRef) {
-            SettingsStore.unwatchSetting(this.layoutWatcherRef);
-        }
+        SettingsStore.unwatchSetting(this.layoutWatcherRef);
     }
 
     /**

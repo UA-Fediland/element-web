@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2021 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -26,10 +26,6 @@ type Props = Omit<ButtonProps<"div">, "title" | "onClick" | "disabled" | "elemen
  * to be displayed in reference to a recording.
  */
 export default class PlayPauseButton extends React.PureComponent<Props> {
-    public constructor(props: Props) {
-        super(props);
-    }
-
     private onClick = (): void => {
         // noinspection JSIgnoredPromiseFromCall
         this.toggleState();

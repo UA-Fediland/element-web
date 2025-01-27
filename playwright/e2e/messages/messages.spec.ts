@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2024 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -63,7 +63,7 @@ test.describe("Message rendering", () => {
         { direction: "ltr", displayName: "Quentin" },
         { direction: "rtl", displayName: "كوينتين" },
     ].forEach(({ direction, displayName }) => {
-        test.describe(`with ${direction} display name`, () => {
+        test.describe(`with ${direction} display name`, { tag: "@screenshot" }, () => {
             test.use({
                 displayName,
                 room: async ({ user, app }, use) => {
@@ -72,14 +72,18 @@ test.describe("Message rendering", () => {
                 },
             });
 
-            test("should render a basic LTR text message", async ({ page, user, app, room }) => {
-                await page.goto(`#/room/${room.roomId}`);
+            test(
+                "should render a basic LTR text message",
+                { tag: "@screenshot" },
+                async ({ page, user, app, room }) => {
+                    await page.goto(`#/room/${room.roomId}`);
 
-                const msgTile = await sendMessage(page, "Hello, world!");
-                await expect(msgTile).toMatchScreenshot(`basic-message-ltr-${direction}displayname.png`, {
-                    mask: [page.locator(".mx_MessageTimestamp")],
-                });
-            });
+                    const msgTile = await sendMessage(page, "Hello, world!");
+                    await expect(msgTile).toMatchScreenshot(`basic-message-ltr-${direction}displayname.png`, {
+                        mask: [page.locator(".mx_MessageTimestamp")],
+                    });
+                },
+            );
 
             test("should render an LTR emote", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);

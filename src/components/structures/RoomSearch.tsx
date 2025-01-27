@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2020, 2021 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -22,11 +22,9 @@ interface IProps {
 }
 
 export default class RoomSearch extends React.PureComponent<IProps> {
-    private readonly dispatcherRef: string;
+    private dispatcherRef?: string;
 
-    public constructor(props: IProps) {
-        super(props);
-
+    public componentDidMount(): void {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
     }
 

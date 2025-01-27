@@ -5,7 +5,7 @@ Copyright 2017, 2018 New Vector Ltd
 Copyright 2017 Vector Creations Ltd
 Copyright 2016 Aviral Dasgupta
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -37,7 +37,7 @@ const USER_REGEX = /\B@\S*/g;
 
 // used when you hit 'tab' - we allow some separator chars at the beginning
 // to allow you to tab-complete /mat into /(matthew)
-const FORCED_USER_REGEX = /[^/,:; \t\n]\S*/g;
+const FORCED_USER_REGEX = /[^/,.():; \t\n]\S*/g;
 
 export default class UserProvider extends AutocompleteProvider {
     public matcher: QueryMatcher<RoomMember>;

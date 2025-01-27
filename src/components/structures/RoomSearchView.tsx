@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2015-2023 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -26,7 +26,7 @@ import ErrorDialog from "../views/dialogs/ErrorDialog";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
-import RoomContext from "../../contexts/RoomContext";
+import { useScopedRoomContext } from "../../contexts/ScopedRoomContext.tsx";
 
 const DEBUG = false;
 let debuglog = function (msg: string): void {};
@@ -53,7 +53,7 @@ interface Props {
 export const RoomSearchView = forwardRef<ScrollPanel, Props>(
     ({ term, scope, promise, abortController, resizeNotifier, className, onUpdate, inProgress }: Props, ref) => {
         const client = useContext(MatrixClientContext);
-        const roomContext = useContext(RoomContext);
+        const roomContext = useScopedRoomContext("showHiddenEvents");
         const [highlights, setHighlights] = useState<string[] | null>(null);
         const [results, setResults] = useState<ISearchResults | null>(null);
         const aborted = useRef(false);

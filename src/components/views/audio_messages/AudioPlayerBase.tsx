@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2021, 2022 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -41,7 +41,9 @@ export default abstract class AudioPlayerBase<T extends IProps = IProps> extends
         this.state = {
             playbackPhase: this.props.playback.currentState,
         };
+    }
 
+    public componentDidMount(): void {
         // We don't need to de-register: the class handles this for us internally
         this.props.playback.on(UPDATE_EVENT, this.onPlaybackUpdate);
 

@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2021 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -12,6 +12,7 @@ import { Room, EventType } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
+import { ErrorIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { _t, _td, TranslationKey } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
@@ -34,7 +35,6 @@ import LazyRenderList from "../elements/LazyRenderList";
 import { useSettingValue } from "../../../hooks/useSettings";
 import { filterBoolean } from "../../../utils/arrays";
 import { NonEmptyArray } from "../../../@types/common";
-import WarningBadgeSvg from "../../../../res/img/element-icons/warning-badge.svg";
 
 // These values match CSS
 const ROW_HEIGHT = 32 + 12;
@@ -131,7 +131,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
     onFinished,
 }) => {
     const cli = useContext(MatrixClientContext);
-    const msc3946ProcessDynamicPredecessor = useSettingValue<boolean>("feature_dynamic_room_predecessors");
+    const msc3946ProcessDynamicPredecessor = useSettingValue("feature_dynamic_room_predecessors");
     const visibleRooms = useMemo(
         () =>
             cli
@@ -229,7 +229,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
     if (error) {
         footer = (
             <>
-                <img src={WarningBadgeSvg} height="24" width="24" alt="" />
+                <ErrorIcon height="24px" width="24px" />
 
                 <span className="mx_AddExistingToSpaceDialog_error">
                     <div className="mx_AddExistingToSpaceDialog_errorHeading">

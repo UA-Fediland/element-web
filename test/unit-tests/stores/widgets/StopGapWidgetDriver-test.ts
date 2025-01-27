@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2022 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -201,10 +201,72 @@ describe("StopGapWidgetDriver", () => {
             });
         });
 
-        it("raises an error if encrypted", async () => {
-            await expect(driver.sendToDevice("org.example.foo", true, contentMap)).rejects.toThrow(
-                "Encrypted to-device events are not supported",
+        it("sends encrypted messages", async () => {
+            const encryptToDeviceMessages = jest
+                .fn()
+                .mockImplementation(
+                    (eventType, recipients: { userId: string; deviceId: string }[], content: object) => ({
+                        eventType: "m.room.encrypted",
+                        batch: recipients.map(({ userId, deviceId }) => ({
+                            userId,
+                            deviceId,
+                            payload: {
+                                eventType,
+                                content,
+                            },
+                        })),
+                    }),
+                );
+
+            MatrixClientPeg.safeGet().getCrypto()!.encryptToDeviceMessages = encryptToDeviceMessages;
+
+            await driver.sendToDevice("org.example.foo", true, {
+                "@alice:example.org": {
+                    aliceMobile: {
+                        hello: "alice",
+                    },
+                },
+                "@bob:example.org": {
+                    bobDesktop: {
+                        hello: "bob",
+                    },
+                },
+            });
+
+            expect(encryptToDeviceMessages).toHaveBeenCalledWith(
+                "org.example.foo",
+                [{ deviceId: "aliceMobile", userId: "@alice:example.org" }],
+                {
+                    hello: "alice",
+                },
             );
+            expect(encryptToDeviceMessages).toHaveBeenCalledWith(
+                "org.example.foo",
+                [{ deviceId: "bobDesktop", userId: "@bob:example.org" }],
+                {
+                    hello: "bob",
+                },
+            );
+            expect(client.queueToDevice).toHaveBeenCalledWith({
+                eventType: "m.room.encrypted",
+                batch: expect.arrayContaining([
+                    {
+                        deviceId: "aliceMobile",
+                        payload: { content: { hello: "alice" }, eventType: "org.example.foo" },
+                        userId: "@alice:example.org",
+                    },
+                ]),
+            });
+            expect(client.queueToDevice).toHaveBeenCalledWith({
+                eventType: "m.room.encrypted",
+                batch: expect.arrayContaining([
+                    {
+                        deviceId: "bobDesktop",
+                        payload: { content: { hello: "bob" }, eventType: "org.example.foo" },
+                        userId: "@bob:example.org",
+                    },
+                ]),
+            });
         });
     });
 

@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -46,7 +46,7 @@ interface IState {
      * We attempt to calculate this once the verification request transitions into the "Ready" phase. If the other
      * side cannot scan QR codes, it will remain `undefined`.
      */
-    qrCodeBytes: Buffer | undefined;
+    qrCodeBytes: Uint8ClampedArray | undefined;
 
     sasEvent: ShowSasCallbacks | null;
     emojiButtonClicked?: boolean;

@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2020 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -65,7 +65,7 @@ export abstract class AsyncStore<T extends object> extends EventEmitter {
      * Stops the store's listening functions, such as the listener to the dispatcher.
      */
     protected stop(): void {
-        if (this.dispatcherRef) this.dispatcher.unregister(this.dispatcherRef);
+        this.dispatcher.unregister(this.dispatcherRef);
     }
 
     /**

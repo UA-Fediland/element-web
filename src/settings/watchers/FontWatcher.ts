@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2020-2023 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -28,11 +28,7 @@ export class FontWatcher implements IWatcher {
      */
     public static readonly DEFAULT_DELTA = 0;
 
-    private dispatcherRef: string | null;
-
-    public constructor() {
-        this.dispatcherRef = null;
-    }
+    private dispatcherRef?: string;
 
     public async start(): Promise<void> {
         this.updateFont();
@@ -61,7 +57,7 @@ export class FontWatcher implements IWatcher {
      * @private
      */
     private async migrateBaseFontV1toFontSizeDelta(): Promise<void> {
-        const legacyBaseFontSize = SettingsStore.getValue<number>("baseFontSize");
+        const legacyBaseFontSize = SettingsStore.getValue("baseFontSize");
         // No baseFontV1 found, nothing to migrate
         if (!legacyBaseFontSize) return;
 
@@ -86,7 +82,7 @@ export class FontWatcher implements IWatcher {
      * @private
      */
     private async migrateBaseFontV2toFontSizeDelta(): Promise<void> {
-        const legacyBaseFontV2Size = SettingsStore.getValue<number>("baseFontSizeV2");
+        const legacyBaseFontV2Size = SettingsStore.getValue("baseFontSizeV2");
         // No baseFontV2 found, nothing to migrate
         if (!legacyBaseFontV2Size) return;
 
@@ -144,16 +140,15 @@ export class FontWatcher implements IWatcher {
      * @returns {number} the default font size of the browser
      */
     public static getBrowserDefaultFontSize(): number {
-        return this.getRootFontSize() - SettingsStore.getValue<number>("fontSizeDelta");
+        return this.getRootFontSize() - SettingsStore.getValue("fontSizeDelta");
     }
 
     public stop(): void {
-        if (!this.dispatcherRef) return;
         dis.unregister(this.dispatcherRef);
     }
 
     private updateFont(): void {
-        this.setRootFontSize(SettingsStore.getValue<number>("fontSizeDelta"));
+        this.setRootFontSize(SettingsStore.getValue("fontSizeDelta"));
         this.setSystemFont({
             useBundledEmojiFont: SettingsStore.getValue("useBundledEmojiFont"),
             useSystemFont: SettingsStore.getValue("useSystemFont"),

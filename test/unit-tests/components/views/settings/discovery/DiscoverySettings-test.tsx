@@ -2,7 +2,7 @@
 Copyright 2024 New Vector Ltd.
 Copyright 2024 The Matrix.org Foundation C.I.C.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -12,7 +12,7 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 import userEvent from "@testing-library/user-event";
 
-import DiscoverySettings from "../../../../../../src/components/views/settings/discovery/DiscoverySettings";
+import { DiscoverySettings } from "../../../../../../src/components/views/settings/discovery/DiscoverySettings";
 import { stubClient } from "../../../../../test-utils";
 import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import { UIFeature } from "../../../../../../src/settings/UIFeature";
@@ -40,7 +40,7 @@ describe("DiscoverySettings", () => {
     const DiscoveryWrapper = (props = {}) => <MatrixClientContext.Provider value={client} {...props} />;
 
     it("is empty if 3pid features are disabled", async () => {
-        jest.spyOn(SettingsStore, "getValue").mockImplementation((key) => {
+        jest.spyOn(SettingsStore, "getValue").mockImplementation((key: any): any => {
             if (key === UIFeature.ThirdPartyID) return false;
         });
 

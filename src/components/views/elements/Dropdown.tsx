@@ -3,7 +3,7 @@ Copyright 2024 New Vector Ltd.
 Copyright 2017-2021 The Matrix.org Foundation C.I.C.
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -127,7 +127,9 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
             // the current search query
             searchQuery: "",
         };
+    }
 
+    public componentDidMount(): void {
         // Listen for all clicks on the document so we can close the
         // menu when the user clicks somewhere else
         document.addEventListener("click", this.onDocumentClick, false);

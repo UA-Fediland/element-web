@@ -6,7 +6,7 @@ Copyright 2018, 2019 New Vector Ltd
 Copyright 2017 Vector Creations Ltd
 Copyright 2015, 2016 OpenMarket Ltd
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -27,7 +27,6 @@ import MatrixChat from "../components/structures/MatrixChat";
 import { ValidatedServerConfig } from "../utils/ValidatedServerConfig";
 import { ModuleRunner } from "../modules/ModuleRunner";
 import { parseQs } from "./url_utils";
-import VectorBasePlatform from "./platform/VectorBasePlatform";
 import { getInitialScreenAfterLogin, getScreenFromLocation, init as initRouting, onNewScreen } from "./routing";
 import { UserFriendlyError } from "../languageHandler";
 
@@ -64,7 +63,7 @@ export async function loadApp(fragParams: {}, matrixChatRef: React.Ref<MatrixCha
     const urlWithoutQuery = window.location.protocol + "//" + window.location.host + window.location.pathname;
     logger.log("Vector starting at " + urlWithoutQuery);
 
-    (platform as VectorBasePlatform).startUpdater();
+    platform?.startUpdater();
 
     // Don't bother loading the app until the config is verified
     const config = await verifyServerConfig();

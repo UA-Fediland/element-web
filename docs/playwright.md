@@ -2,10 +2,10 @@
 
 ## Contents
 
--   How to run the tests
--   How the tests work
--   How to write great Playwright tests
--   Visual testing
+- How to run the tests
+- How the tests work
+- How to write great Playwright tests
+- Visual testing
 
 ## Running the Tests
 
@@ -53,15 +53,11 @@ yarn run test:playwright:open --headed --debug
 
 See more command line options at <https://playwright.dev/docs/test-cli>.
 
-### Running with Rust cryptography
+## Projects
 
-`matrix-js-sdk` is currently in the
-[process](https://github.com/vector-im/element-web/issues/21972) of being
-updated to replace its end-to-end encryption implementation to use the [Matrix
-Rust SDK](https://github.com/matrix-org/matrix-rust-sdk). This is not currently
-enabled by default, but it is possible to have Playwright configure Element to use
-the Rust crypto implementation by passing `--project="Rust Crypto"` or using
-the top left options in open mode.
+By default, Playwright will run all "Projects", this means tests will run against Chrome, Firefox and "Safari" (Webkit).
+We only run tests against Chrome in pull request CI, but all projects in the merge queue.
+Some tests are excluded from running on certain browsers due to incompatibilities in the test harness.
 
 ## How the Tests Work
 
@@ -123,15 +119,15 @@ When a Synapse instance is started, it's given a config generated from one of th
 templates in `playwright/plugins/homeserver/synapse/templates`. There are a couple of special files
 in these templates:
 
--   `homeserver.yaml`:
-    Template substitution happens in this file. Template variables are:
-    -   `REGISTRATION_SECRET`: The secret used to register users via the REST API.
-    -   `MACAROON_SECRET_KEY`: Generated each time for security
-    -   `FORM_SECRET`: Generated each time for security
-    -   `PUBLIC_BASEURL`: The localhost url + port combination the synapse is accessible at
--   `localhost.signing.key`: A signing key is auto-generated and saved to this file.
-    Config templates should not contain a signing key and instead assume that one will exist
-    in this file.
+- `homeserver.yaml`:
+  Template substitution happens in this file. Template variables are:
+    - `REGISTRATION_SECRET`: The secret used to register users via the REST API.
+    - `MACAROON_SECRET_KEY`: Generated each time for security
+    - `FORM_SECRET`: Generated each time for security
+    - `PUBLIC_BASEURL`: The localhost url + port combination the synapse is accessible at
+- `localhost.signing.key`: A signing key is auto-generated and saved to this file.
+  Config templates should not contain a signing key and instead assume that one will exist
+  in this file.
 
 All other files in the template are copied recursively to `/data/`, so the file `foo.html`
 in a template can be referenced in the config as `/data/foo.html`.
@@ -217,3 +213,21 @@ instead of the native `toHaveScreenshot`.
 
 If you are running Linux and are unfortunate that the screenshots are not rendering identically,
 you may wish to specify `--ignore-snapshots` and rely on Docker to render them for you.
+
+## Test Tags
+
+We use test tags to categorise tests for running subsets more efficiently.
+
+- `@mergequeue`: Tests that are slow or flaky and cover areas of the app we update seldom, should not be run on every PR commit but will be run in the Merge Queue.
+- `@screenshot`: Tests that use `toMatchScreenshot` to speed up a run of `test:playwright:screenshots`. A test with this tag must not also have the `@mergequeue` tag as this would cause false positives in the stale screenshot detection.
+- `@no-$project`: Tests which are unsupported in $Project. These tests will be skipped when running in $Project.
+
+Anything testing Matrix media will need to have `@no-firefox` and `@no-webkit` as those rely on the service worker which
+has to be disabled in Playwright on Firefox & Webkit to retain routing functionality.
+Anything testing VoIP/microphone will need to have `@no-webkit` as fake microphone functionality is not available
+there at this time.
+
+## Colima
+
+If you are running under Colima, you may need to set the environment variable `TMPDIR` to `/tmp/colima` or a path
+within `$HOME` to allow bind mounting temporary directories into the Docker containers.
