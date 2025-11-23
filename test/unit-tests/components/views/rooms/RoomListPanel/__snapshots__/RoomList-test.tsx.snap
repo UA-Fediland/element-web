@@ -4,7 +4,6 @@ exports[`<RoomList /> should render a room list 1`] = `
 <DocumentFragment>
   <div
     aria-label="Room list"
-    context="[object Object]"
     data-testid="room-list"
     data-virtuoso-scroller="true"
     role="listbox"
@@ -30,7 +29,7 @@ exports[`<RoomList /> should render a room list 1`] = `
             aria-posinset="1"
             aria-selected="false"
             aria-setsize="10"
-            class="flex mx_RoomListItemView"
+            class="_flex_4dswl_9 mx_RoomListItemView"
             data-state="closed"
             role="option"
             style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
@@ -57,7 +56,7 @@ exports[`<RoomList /> should render a room list 1`] = `
               />
             </span>
             <div
-              class="flex mx_RoomListItemView_content"
+              class="_flex_4dswl_9 mx_RoomListItemView_content"
               style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
             >
               <div
@@ -84,7 +83,7 @@ exports[`<RoomList /> should render a room list 1`] = `
             aria-posinset="2"
             aria-selected="false"
             aria-setsize="10"
-            class="flex mx_RoomListItemView"
+            class="_flex_4dswl_9 mx_RoomListItemView"
             data-state="closed"
             role="option"
             style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
@@ -111,7 +110,7 @@ exports[`<RoomList /> should render a room list 1`] = `
               />
             </span>
             <div
-              class="flex mx_RoomListItemView_content"
+              class="_flex_4dswl_9 mx_RoomListItemView_content"
               style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
             >
               <div
@@ -138,7 +137,7 @@ exports[`<RoomList /> should render a room list 1`] = `
             aria-posinset="3"
             aria-selected="false"
             aria-setsize="10"
-            class="flex mx_RoomListItemView"
+            class="_flex_4dswl_9 mx_RoomListItemView"
             data-state="closed"
             role="option"
             style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
@@ -165,7 +164,7 @@ exports[`<RoomList /> should render a room list 1`] = `
               />
             </span>
             <div
-              class="flex mx_RoomListItemView_content"
+              class="_flex_4dswl_9 mx_RoomListItemView_content"
               style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
             >
               <div
@@ -192,7 +191,7 @@ exports[`<RoomList /> should render a room list 1`] = `
             aria-posinset="4"
             aria-selected="false"
             aria-setsize="10"
-            class="flex mx_RoomListItemView"
+            class="_flex_4dswl_9 mx_RoomListItemView"
             data-state="closed"
             role="option"
             style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
@@ -219,7 +218,7 @@ exports[`<RoomList /> should render a room list 1`] = `
               />
             </span>
             <div
-              class="flex mx_RoomListItemView_content"
+              class="_flex_4dswl_9 mx_RoomListItemView_content"
               style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
             >
               <div
@@ -246,7 +245,7 @@ exports[`<RoomList /> should render a room list 1`] = `
             aria-posinset="5"
             aria-selected="false"
             aria-setsize="10"
-            class="flex mx_RoomListItemView"
+            class="_flex_4dswl_9 mx_RoomListItemView"
             data-state="closed"
             role="option"
             style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
@@ -273,7 +272,7 @@ exports[`<RoomList /> should render a room list 1`] = `
               />
             </span>
             <div
-              class="flex mx_RoomListItemView_content"
+              class="_flex_4dswl_9 mx_RoomListItemView_content"
               style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
             >
               <div
@@ -300,7 +299,7 @@ exports[`<RoomList /> should render a room list 1`] = `
             aria-posinset="6"
             aria-selected="false"
             aria-setsize="10"
-            class="flex mx_RoomListItemView"
+            class="_flex_4dswl_9 mx_RoomListItemView"
             data-state="closed"
             role="option"
             style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
@@ -327,7 +326,7 @@ exports[`<RoomList /> should render a room list 1`] = `
               />
             </span>
             <div
-              class="flex mx_RoomListItemView_content"
+              class="_flex_4dswl_9 mx_RoomListItemView_content"
               style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
             >
               <div
@@ -354,7 +353,7 @@ exports[`<RoomList /> should render a room list 1`] = `
             aria-posinset="7"
             aria-selected="false"
             aria-setsize="10"
-            class="flex mx_RoomListItemView"
+            class="_flex_4dswl_9 mx_RoomListItemView"
             data-state="closed"
             role="option"
             style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
@@ -381,7 +380,7 @@ exports[`<RoomList /> should render a room list 1`] = `
               />
             </span>
             <div
-              class="flex mx_RoomListItemView_content"
+              class="_flex_4dswl_9 mx_RoomListItemView_content"
               style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
             >
               <div
@@ -408,7 +407,7 @@ exports[`<RoomList /> should render a room list 1`] = `
             aria-posinset="8"
             aria-selected="false"
             aria-setsize="10"
-            class="flex mx_RoomListItemView"
+            class="_flex_4dswl_9 mx_RoomListItemView"
             data-state="closed"
             role="option"
             style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
@@ -435,7 +434,7 @@ exports[`<RoomList /> should render a room list 1`] = `
               />
             </span>
             <div
-              class="flex mx_RoomListItemView_content"
+              class="_flex_4dswl_9 mx_RoomListItemView_content"
               style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
             >
               <div
@@ -462,7 +461,7 @@ exports[`<RoomList /> should render a room list 1`] = `
             aria-posinset="9"
             aria-selected="false"
             aria-setsize="10"
-            class="flex mx_RoomListItemView"
+            class="_flex_4dswl_9 mx_RoomListItemView"
             data-state="closed"
             role="option"
             style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
@@ -489,7 +488,7 @@ exports[`<RoomList /> should render a room list 1`] = `
               />
             </span>
             <div
-              class="flex mx_RoomListItemView_content"
+              class="_flex_4dswl_9 mx_RoomListItemView_content"
               style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
             >
               <div
@@ -516,7 +515,7 @@ exports[`<RoomList /> should render a room list 1`] = `
             aria-posinset="10"
             aria-selected="false"
             aria-setsize="10"
-            class="flex mx_RoomListItemView"
+            class="_flex_4dswl_9 mx_RoomListItemView"
             data-state="closed"
             role="option"
             style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
@@ -543,7 +542,7 @@ exports[`<RoomList /> should render a room list 1`] = `
               />
             </span>
             <div
-              class="flex mx_RoomListItemView_content"
+              class="_flex_4dswl_9 mx_RoomListItemView_content"
               style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
             >
               <div
